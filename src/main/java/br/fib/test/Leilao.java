@@ -14,14 +14,35 @@ public class Leilao {
     }
 
     public void propoe(Lance lance) {
-   	 lances.add(lance);
-    }
+    	if (lances.isEmpty() || PodeDarLance(lance.getUsuario()))
+    	{
+    		lances.add(lance);
+    	}
+    }	
 
     public String getDescricao() {
-   	 return descricao;
+   	 	return descricao;
     }
 
     public List<Lance> getLances() {
-   	 return Collections.unmodifiableList(lances);
+   	 	return Collections.unmodifiableList(lances);
+    }
+    
+    private Lance ultimoLanceDado() {
+		return lances.get(lances.size() -1);
+	}
+    
+    private boolean PodeDarLance(Usuario usuario) {
+    	return !ultimoLanceDado().getUsuario().equals(usuario) &&
+    			quantidadeLancesDados(usuario) < 5;
+    }
+    
+    private int quantidadeLancesDados(Usuario usuario) {
+    	int total = 0;
+    	for (Lance lance: lances) {
+    		if (lance.getUsuario().equals(usuario)) total ++;
+    	}
+    	
+    	return total;
     }
 }
